@@ -6,8 +6,8 @@ DROP TABLE public.articles;
 DROP TABLE public.entities;
 
 CREATE TABLE public.articles(
-  id character(16) PRIMARY KEY NOT NULL,
-  filename character(64) NOT NULL,
+  id character varying PRIMARY KEY NOT NULL,
+  filename character varying NOT NULL,
   published_at timestamp without time zone NOT NULL,
   processed boolean NOT NULL DEFAULT false,
   created_at timestamp without time zone NOT NULL,

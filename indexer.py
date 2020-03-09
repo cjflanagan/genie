@@ -17,6 +17,6 @@ with connection:
             i = 0
             for row in csv_reader:
                 if not row[2] in ids:
-                    cur.execute("INSERT INTO articles VALUES (%s, %s, %s, false, %s, %s);",(row[2], row[0], row[3], datetime.datetime.now(), datetime.datetime.now()))
+                    cur.execute("INSERT INTO articles VALUES (%s, %s, %s, false, %s, %s);",(row[2], row[0], row[3], str(datetime.datetime.now()), str(datetime.datetime.now())))
                     i+= 1
                     print(i)

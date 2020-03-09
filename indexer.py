@@ -13,7 +13,8 @@ with connection:
 
         with open("files/oa_file_list.csv") as csv_file:
             csv_reader = reader(csv_file)
-
+            next(csv_reader)
+            
             i = 0
             for row in csv_reader:
                 if not row[2] in ids:

@@ -2,6 +2,9 @@ CREATE DATABASE genie;
 
 \c genie;
 
+DROP TABLE public.articles;
+DROP TABLE public.entities;
+
 CREATE TABLE public.articles(
   id character(16) PRIMARY KEY NOT NULL,
   filename character(64) NOT NULL,
@@ -12,6 +15,7 @@ CREATE TABLE public.articles(
 );
 
 CREATE UNIQUE INDEX index_articles_on_id ON public.articles USING btree (id);
+CREATE INDEX index_articles_on_published_at ON public.articles USING btree (published_at);
 
 CREATE TABLE public.entities(
   id character varying PRIMARY KEY NOT NULL,

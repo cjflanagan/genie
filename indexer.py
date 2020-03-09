@@ -1,10 +1,10 @@
 import pdb
 from csv import reader
-import psycopg2
+from connection import connection
 import datetime
 
-with psycopg2.connect(host = "localhost", port = "5432", database = "genie") as conn:
-    with conn.cursor() as cur:
+with connection:
+    with connection.cursor() as cur:
         cur.execute("SELECT id FROM articles;")
         articles = cur.fetchall()
         ids = set()

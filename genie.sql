@@ -16,6 +16,7 @@ CREATE TABLE public.articles(
 
 CREATE UNIQUE INDEX index_articles_on_id ON public.articles USING btree (id);
 CREATE INDEX index_articles_on_published_at ON public.articles USING btree (published_at);
+CREATE INDEX index_articles_on_processed ON public.articles USING btree (id);
 
 CREATE TABLE public.entities(
   id character varying PRIMARY KEY NOT NULL,

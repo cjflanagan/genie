@@ -19,7 +19,7 @@ while True:
                 FROM articles
                 WHERE processed = false
                 ORDER BY published_at
-                DESC LIMIT 100;
+                DESC LIMIT 10;
             """)
 
             articles = cur.fetchall()

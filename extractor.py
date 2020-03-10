@@ -35,12 +35,15 @@ while True:
                 file.close()
                 shutil.rmtree("/tmp/genie/" + tar.getmembers()[0].name)
                 tar.close()
-                tree = ET.fromstring(str(content))
-                abstract = tree[0][1].find("abstract")
-                if abstract:
-                    abstract = ET.tostring(abstract, method = "text").decode()
-                    for ent in nlp(abstract).ents:
-                        ents[ent.text.lower()] = ents.get(ent.text.lower(), 0) + 1
+                try:
+                    tree = ET.fromstring(str(content))
+                    abstract = tree[0][1].find("abstract")
+                    if abstract:
+                        abstract = ET.tostring(abstract, method = "text").decode()
+                        for ent in nlp(abstract).ents:
+                            ents[ent.text.lower()] = ents.get(ent.text.lower(), 0) + 1
+                except xml.etree.ElementTree.ParseError:
+                    print("parse error")
 
             if len(ents):
                 entities = {}

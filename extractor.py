@@ -42,7 +42,7 @@ while True:
                         abstract = ET.tostring(abstract, method = "text").decode()
                         for ent in nlp(abstract).ents:
                             ents[ent.text.lower()] = ents.get(ent.text.lower(), 0) + 1
-                except xml.etree.ElementTree.ParseError:
+                except ET.ParseError:
                     print("parse error")
 
             if len(ents):

@@ -1,5 +1,5 @@
 import pdb
-from connection import connection
+import connection
 import csv
 import tarfile
 import urllib.request, urllib.parse, urllib.error
@@ -7,20 +7,25 @@ import xml.etree.ElementTree as ET
 import psycopg2
 import shutil
 import spacy
+import datetime
 
 url = "ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/"
 nlp = spacy.load("en_core_sci_sm")
 
 while True:
-    with connection:
-        with connection.cursor() as cur:
+    with connection.connection as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT published_at FROM articles OFFSET floor(random() * %s) LIMIT 1;", (connection.articles_count,))
+            year = cur.fetchone()[0].year
+
             cur.execute("""
-                SELECT id, filename
+                SELECT id, filename, published_at
                 FROM articles
                 WHERE processed = false
+                AND published_at BETWEEN %s AND %s
                 ORDER BY published_at
                 DESC LIMIT 10;
-            """)
+            """, (datetime.datetime(year, 1, 1).date(), datetime.datetime(year + 1, 1, 1).date()))
 
             articles = cur.fetchall()
             ents = {}

@@ -15,8 +15,20 @@ CREATE INDEX index_articles_on_published_at ON public.articles USING btree (publ
 CREATE INDEX index_articles_on_processed ON public.articles USING btree (processed);
 
 CREATE TABLE public.entities(
+  id integer NOT NULL,
   name character varying NOT NULL,
   year integer NOT NULL,
-  count integer NOT NULL DEFAULT 0,
-  PRIMARY KEY(name, year)
+  count integer NOT NULL DEFAULT 0
 );
+
+CREATE SEQUENCE public.entities_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.entities_id_seq OWNED BY public.entities.id;
+
+CREATE UNIQUE INDEX index_entities_on_name_and_year ON public.entities USING btree (name, year);

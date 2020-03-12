@@ -10,7 +10,20 @@ app = Flask("genie")
 def index():
     with connection:
         with connection.cursor() as cur:
-            cur.execute("SELECT id, count FROM entities ORDER BY count DESC LIMIT 1000")
+            cur.execute("""
+                SELECT name, year, count
+                FROM entities
+                WHERE name IN (
+                    SELECT name
+                    FROM entities
+                    GROUP BY name
+                    ORDER BY sum(count) DESC
+                    LIMIT 500)
+            """)
+
+            entities = cur.fetchall()
+            pdb.set_trace()
+
             return render_template("index.html", entities = cur.fetchall(), datetime = datetime.datetime.now())
 
 app.run()

@@ -53,14 +53,14 @@ while True:
             if len(ents):
                 entities = {}
 
-                cur.execute("SELECT id, count FROM entities WHERE id IN %s;", (tuple([*ents]),))
+                cur.execute("SELECT name, count FROM entities WHERE name IN %s AND year = %s;", (tuple([*ents]), year))
                 for entity in cur.fetchall():
                     entities[entity[0]] = entity[1]
 
                 for ent in ents:
                     if ent in entities:
-                        cur.execute("UPDATE entities SET count = %s WHERE id = %s;", (ents[ent] + entities[ent], ent))
+                        cur.execute("UPDATE entities SET count = %s WHERE name = %s AND year = %s;", (ents[ent] + entities[ent], ent, year))
                     else:
-                        cur.execute("INSERT INTO entities VALUES (%s, %s);", (ent, ents[ent]))
+                        cur.execute("INSERT INTO entities(name, year, count) VALUES (%s, %s, %s);", (ent, year, ents[ent]))
 
             cur.execute("UPDATE articles SET processed = true WHERE id IN %s;", (tuple([article[0] for article in articles]),))

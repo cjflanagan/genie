@@ -40,16 +40,17 @@ while True:
                 file.close()
                 shutil.rmtree("/tmp/genie/" + tar.getmembers()[0].name)
                 tar.close()
+
+                abstract = None
                 try:
-                    print(article[0])
                     tree = ET.fromstring(str(content))
                     abstract = tree[0][1].find("abstract")
-                    if abstract:
-                        abstract = ET.tostring(abstract, method = "text").decode()
-                        for ent in nlp(abstract).ents:
-                            ents[ent.text.lower()] = ents.get(ent.text.lower(), 0) + 1
-                except ET.ParseError:
-                    print("parse error")
+                except:
+                    print("error in " + article[0])
+                if abstract:
+                    abstract = ET.tostring(abstract, method = "text").decode()
+                    for ent in nlp(abstract).ents:
+                        ents[ent.text.lower()] = ents.get(ent.text.lower(), 0) + 1
 
             if len(ents):
                 entities = {}

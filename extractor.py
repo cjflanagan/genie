@@ -41,6 +41,7 @@ while True:
                 shutil.rmtree("/tmp/genie/" + tar.getmembers()[0].name)
                 tar.close()
                 try:
+                    print(article[0])
                     tree = ET.fromstring(str(content))
                     abstract = tree[0][1].find("abstract")
                     if abstract:

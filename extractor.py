@@ -24,7 +24,7 @@ while True:
                 WHERE processed = false
                 AND published_at BETWEEN %s AND %s
                 ORDER BY published_at
-                DESC LIMIT 10;
+                DESC LIMIT 100;
             """, (datetime.datetime(year, 1, 1).date(), datetime.datetime(year + 1, 1, 1).date()))
 
             articles = cur.fetchall()

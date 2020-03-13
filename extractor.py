@@ -31,23 +31,19 @@ while True:
             ents = {}
 
             for article in articles:
-                response = urllib.request.urlopen(url + article[1])
-                tar = tarfile.open(fileobj=response, mode="r:gz")
-                tar.extractall("/tmp/genie/")
-                name = [n for n in tar.getnames() if n[-3:] == "xml"][0]
-                file = open("/tmp/genie/" + name, "r")
-                content = file.read()
-                file.close()
-                shutil.rmtree("/tmp/genie/" + tar.getmembers()[0].name)
-                tar.close()
-
-                abstract = None
                 try:
+                    response = urllib.request.urlopen(url + article[1])
+                    tar = tarfile.open(fileobj=response, mode="r:gz")
+                    tar.extractall("/tmp/genie/")
+                    name = [n for n in tar.getnames() if n[-3:] == "xml"][0]
+                    file = open("/tmp/genie/" + name, "r")
+                    content = file.read()
+                    file.close()
+                    shutil.rmtree("/tmp/genie/" + tar.getmembers()[0].name)
+                    tar.close()
+
                     tree = ET.fromstring(str(content))
                     abstract = tree[0][1].find("abstract")
-                except:
-                    print("error in " + article[0])
-                if abstract:
                     abstract = ET.tostring(abstract, method = "text").decode()
                     for ent in nlp(abstract).ents:
                         ents[ent.text.lower()] = ents.get(ent.text.lower(), 0) + 1

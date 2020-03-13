@@ -50,7 +50,7 @@ def entities():
                 entity = ents[ent]
                 ents_list.append((ent, entity[0], entity[1], (entity[1][-1] - entity[1][0]) ** 2, statistics.variance(entity[1]) if len(entity[1]) > 1 else 0))
 
-            ents_list = sorted(ents_list, reverse = True, key = itemgetter(4))[:50]
+            ents_list = sorted(ents_list, reverse = True, key = itemgetter(3))[:50]
             return jsonify(ents_list)
 
 app.run()

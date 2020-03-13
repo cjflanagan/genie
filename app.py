@@ -4,6 +4,8 @@ from flask import jsonify
 from connection import connection
 import datetime
 import pdb
+import statistics
+from operator import itemgetter
 
 app = Flask("genie")
 
@@ -42,6 +44,16 @@ def entities():
                 ents.setdefault(entity[0], ([], []))
                 ents[entity[0]][0].append(entity[1])
                 ents[entity[0]][1].append(entity[2] / float(year_counts[entity[1]]))
-            return jsonify(ents)
+
+            ents_list = []
+            for ent in ents:
+                entity = ents[ent]
+                var = 0
+                if len(entity[1]) > 1:
+                    var = statistics.variance(entity[1])
+                ents_list.append((ent, entity[0], entity[1], var))
+
+            ents_list = sorted(ents_list, key = itemgetter(3))[:50]
+            return jsonify(ents_list)
 
 app.run()

@@ -48,12 +48,9 @@ def entities():
             ents_list = []
             for ent in ents:
                 entity = ents[ent]
-                var = 0
-                if len(entity[1]) > 1:
-                    var = statistics.variance(entity[1])
-                ents_list.append((ent, entity[0], entity[1], var))
+                ents_list.append((ent, entity[0], entity[1], (entity[1][-1] - entity[1][0]) ** 2))
 
-            ents_list = sorted(ents_list, key = itemgetter(3))[:10]
+            ents_list = sorted(ents_list, key = itemgetter(3))[:20]
             return jsonify(ents_list)
 
 app.run()

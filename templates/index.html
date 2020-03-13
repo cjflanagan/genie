@@ -1,19 +1,39 @@
 <html>
   <head>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
     <script>
-      setTimeout(function() { location.reload() }, 5000);
+      function fetch() {
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let entities = JSON.parse(this.responseText);
+                let traces = [];
+
+                for (let entity in entities) {
+                  let trace = {
+                    x: entities[entity][0],
+                    y: entities[entity][1],
+                    mode: "markers",
+                    type: "scatter",
+                    name: entity
+                  };
+                  traces.push(trace);
+                }
+
+                Plotly.newPlot("plots", traces);
+            }
+        };
+        xmlhttp.open("GET", "/entities", true);
+        xmlhttp.send();
+
+        setTimeout(function() { fetch() }, 10000);
+      }
+      fetch();
     </script>
   </head>
   <body>
     <h2>Most Popular Topics in Recent PubMed Articles</h2>
-    <h4>Updated At {{datetime}}</h2>
-    <table>
-      {% for entity in entities %}
-        <tr>
-          <td>{{entity[0]}}</td>
-          <td>{{entity[1]}}</td>
-        </tr>
-      {% endfor %}
-    </table>
+    <h4 id="updated-at"></h4>
+    <div id="plots"></div>
   </body>
 </html>

@@ -53,7 +53,7 @@ def entities():
                     var = statistics.variance(entity[1])
                 ents_list.append((ent, entity[0], entity[1], var))
 
-            ents_list = sorted(ents_list, key = itemgetter(3))[:50]
+            ents_list = sorted(ents_list, key = itemgetter(3))[:10]
             return jsonify(ents_list)
 
 app.run()

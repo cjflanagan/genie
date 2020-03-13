@@ -16,6 +16,17 @@ def entities():
     with connection:
         with connection.cursor() as cur:
             cur.execute("""
+                SELECT extract(year FROM published_at) AS yyyy, count(*)
+                FROM articles
+                WHERE processed = true
+                GROUP BY yyyy;
+            """)
+
+            year_counts = {}
+            for year_count in cur.fetchall():
+                year_counts[int(year_count[0])] = year_count[1]
+
+            cur.execute("""
                 SELECT name, year, count
                 FROM entities
                 WHERE name IN (
@@ -30,7 +41,7 @@ def entities():
             for entity in cur.fetchall():
                 ents.setdefault(entity[0], ([], []))
                 ents[entity[0]][0].append(entity[1])
-                ents[entity[0]][1].append(entity[2])
+                ents[entity[0]][1].append(entity[2] / float(year_counts[entity[1]]))
             return jsonify(ents)
 
 app.run()

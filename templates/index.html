@@ -5,27 +5,61 @@
       function fetch() {
         let xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                let entities = JSON.parse(this.responseText);
-                let traces = [];
+          if (this.readyState == 4 && this.status == 200) {
+            let entityLists = JSON.parse(this.responseText);
+            let plots = document.getElementById("plots");
 
-                for (let entity in entities) {
-                  let trace = {
-                    x: entities[entity][1],
-                    y: entities[entity][2],
-                    mode: "lines",
-                    type: "scatter",
-                    name: entities[entity][0]
-                  };
-                  traces.push(trace);
+            for (let i = 0; i < entityLists.length; i++) {
+              let entityList = entityLists[i];
+
+              let plot = document.createElement("div");
+              plot.id = "plot-" + i;
+              let table = document.createElement("div");
+              table.id = "table-" + i
+              let h3 = document.createElement("h3");
+              h3.innerHTML = entityList.type + " DESC " + entityList.desc
+              plots.appendChild(h3);
+              plots.appendChild(plot);
+              plots.appendChild(table);
+
+              let data = [];
+              data.push([]);
+              data[0].push("");
+              for (let e = 0; e < entityList.data.length; e++) {
+                data[0].push(entityList.data[e][0]);
+              }
+              for (let y = 0; y < entityList.years.length; y++) {
+                let col = [];
+                data.push(col);
+                col.push(entityList.years[y]);
+                for (let e = 0; e < entityList.data.length; e++) {
+                  col.push(entityList.data[e][1][y]);
                 }
+              }
+              let result = [entityList.type]
+              data.push(result)
+              for (let e = 0; e < entityList.data.length; e++) {
+                result.push(entityList.data[e][2]);
+              }
+              Plotly.newPlot('table-' + i, [{type: "table", columnwidth: [3, 1], cells: {values: data}}]);
 
-                Plotly.newPlot("plots", traces, {
-                  autosize: false,
-                  width: 1600,
-                  height: 1600,
-                });
+              let traces = [];
+              for (let e = 0; e < entityList.data.length; e++) {
+                traces.push({
+                  x: entityList.years,
+                  y: entityList.data[e][1],
+                  mode: "lines",
+                  type: "scatter",
+                  name: entityList.data[e][0],
+                })
+              }
+              Plotly.newPlot("plot-" + i, traces, {
+                autosize: false,
+                width: 1200,
+                height: 720,
+              });
             }
+          }
         };
         xmlhttp.open("GET", "/entities", true);
         xmlhttp.send();

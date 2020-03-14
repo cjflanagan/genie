@@ -48,7 +48,7 @@ def entities():
                 entity_counts[entity[0]][entity[1]] = float(entity[2]) / year_counts[entity[1]]
 
             entity_measures = []
-            measure_types = ["change", "relative change", "average change", "current", "variance", "std", "mean", "relative std"]
+            measure_types = ["change", "relative change", "average change", "current", "variance", "std", "mean", "relative std", "number of growth years"]
             for ent in entity_counts:
                 entity_count = entity_counts[ent]
                 data = []
@@ -61,8 +61,7 @@ def entities():
                         data.append(None)
 
                 y = np.array(counts)
-                entity_measures.append((ent, data, y[-1] - y[0], y[-1] / y[0], np.mean(y[1:] / y[0:-1]), y[-1], np.var(y), np.std(y), np.mean(y), np.std(y) / np.mean(y)))
-
+                entity_measures.append((ent, data, y[-1] - y[0], y[-1] / y[0], np.mean(y[1:] / y[0:-1]), y[-1], np.var(y), np.std(y), np.mean(y), np.std(y) / np.mean(y), float((y[1:] / y[0:-1] > 1).sum())))
             entity_lists = []
             for i, type in enumerate(measure_types):
                 for b in range(2):

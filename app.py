@@ -39,7 +39,7 @@ def entities():
                     FROM entities
                     GROUP BY name
                     ORDER BY sum(count) DESC
-                    LIMIT 500)
+                    LIMIT 20000)
                 ORDER BY year;
             """)
             entity_counts = {}

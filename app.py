@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask import render_template
 from flask import jsonify
 from connection import connection
@@ -13,6 +13,10 @@ app = Flask("genie")
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route('/js/data.js')
+def data_js():
+    return send_from_directory("js", "data.js")
 
 @app.route("/entities")
 def entities():
@@ -77,4 +81,4 @@ def entities():
                     entity_lists.append(entity_list)
             return jsonify(entity_lists)
 
-app.run()
+app.run(host = "0.0.0.0", port = 5000)

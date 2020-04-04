@@ -40,7 +40,6 @@ var dataSet = [
 
 function drawTable(data) {
   let thead = $("#table thead");
-  debugger;
   thead.empty();
   let header = $("<tr>");
   for (let i = 0; i < headers.length; i++) {
@@ -79,9 +78,9 @@ function drawTable(data) {
         }
       });
       drawTable(d);
-      drawHistogram(d, 5);
+      drawHistogram(d, 2);
       updateCsv(d);
-      drawScatter(d, 3, 5);
+      drawScatter(d, 1, 2);
     });
   }
   tfoot.append(tr);
@@ -137,6 +136,6 @@ function drawScatter(data, i, j) {
 }
 
 drawTable(dataSet);
-drawHistogram(dataSet, 5);
+drawHistogram(dataSet, 2);
 updateCsv(dataSet);
-drawScatter(dataSet, 3, 5);
+drawScatter(dataSet, 1, 2);

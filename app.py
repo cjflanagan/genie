@@ -1,7 +1,6 @@
 from flask import Flask, send_from_directory
 from flask import render_template
 from flask import jsonify
-from connection import connection
 import datetime
 import pdb
 import statistics

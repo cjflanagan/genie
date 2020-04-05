@@ -14,11 +14,11 @@ from bs4 import BeautifulSoup
 
 app = Flask("genie")
 
-@app.route("/")
+@app.route("/index")
 def index():
-    return render_template("index.html")
+    return render_template("list.html")
 
-@app.route("/list")
+@app.route("/")
 def list():
     data = []
     with open("ExampleValues.csv", "r") as file:
@@ -127,4 +127,4 @@ def entities():
                     entity_lists.append(entity_list)
             return jsonify(entity_lists)
 
-app.run(host = "0.0.0.0", port = 5000)
+app.run(host = "0.0.0.0", port = 5000, debug = True)

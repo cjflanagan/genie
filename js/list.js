@@ -70,49 +70,14 @@ function updateTable(data) {
     tbody.append(tr)
   }
 
-  // let header = $("<tr>");
-  // for (let i = 0; i < headers.length; i++) {
-  //   let th = $("<th>" + headers[i] + "</th>");
-  //   header.append(th);
-  // }
-  // thead.append(header);
-  //
-  // let tbody = $("#table tbody");
-  // tbody.empty();
-  //
-  // data.forEach((row) => {
-  //   let tr = $("<tr>");
-  //   row.forEach((field) => {
-  //     let td = $("<td>" + field + "</td>");
-  //     tr.append(td);
-  //   });
-  //   tbody.append(tr);
-  // });
-  //
-  // let tfoot = $("#table tfoot");
-  // tfoot.empty();
-  //
-  // let tr = $("<tr>");
-  // for (let i = 0; i < dataSet[0].length; i++) {
-  //   let td = $("<td>");
-  //   let input = $("<input>");
-  //   input.attr("placeholder", "Type to filter by col " + i);
-  //   td.append(input);
-  //   tr.append(td);
-  //   input.change(function (event) {
-  //     let d = [];
-  //     dataSet.forEach((dset) => {
-  //       if (dset[i].includes(event.currentTarget.value)) {
-  //         d.push(dset);
-  //       }
-  //     });
-  //     drawTable(d);
-  //     drawHistogram(d, 2);
-  //     updateCsv(d);
-  //     drawScatter(d, 1, 2);
-  //   });
-  // }
-  // tfoot.append(tr);
+  let csv = ""
+  data.forEach(function (row) {
+    csv += row.join(",")
+    csv += "\n"
+  })
+  let a = document.getElementById("export")
+  a.href = "data:text/csv;charset=utf-8," + encodeURI(csv)
+  a.download = "data.csv"
 }
 
 function updateQuad(data) {
@@ -148,9 +113,11 @@ function updateQuad(data) {
     url: "/search?q=" + data[0],
     success: (data) => {
       for (let i = 0; i < data.length; i++) {
+        let adiv = $("<div>")
         let atag = $("<a>" + data[i][0] + "</a>")
         atag.attr("href", data[i][1])
-        $("#articles1").append(atag)
+        adiv.append(atag)
+        $("#articles1").append(adiv)
       }
     }
   })
@@ -169,57 +136,3 @@ function updateQuad(data) {
 }
 
 updateData(genieData)
-//
-// function drawHistogram(data, i) {
-//   $("#histogram").empty();
-//   let x = [];
-//   data.forEach((row) => {
-//     x.push(row[i]);
-//   });
-//
-//   let trace = {
-//     x: x,
-//     type: "histogram",
-//     nbins: 20,
-//   };
-//   let traces = [trace];
-//   Plotly.newPlot("histogram", traces);
-// }
-//
-// function updateCsv(data) {
-//   let csv = "";
-//   data.forEach(function (row) {
-//     csv += row.join(",");
-//     csv += "\n";
-//   });
-//
-//   let a = document.getElementById("export");
-//   a.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
-//   a.download = "data.csv";
-// }
-//
-// function drawScatter(data, i, j) {
-//   $("#scatter").empty();
-//   let x = [];
-//   let y = [];
-//   data.forEach((row) => {
-//     x.push(row[i]);
-//     y.push(row[j]);
-//   });
-//
-//   var trace1 = {
-//     x: x,
-//     y: y,
-//     mode: "markers",
-//     type: "scatter",
-//   };
-//
-//   var traces = [trace1];
-//
-//   Plotly.newPlot("scatter", traces);
-// }
-//
-// drawTable(dataSet);
-// drawHistogram(dataSet, 2);
-// updateCsv(dataSet);
-// drawScatter(dataSet, 1, 2);

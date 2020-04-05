@@ -7,6 +7,7 @@ import statistics
 from operator import itemgetter
 import numpy as np
 import csv
+import random
 
 app = Flask("genie")
 
@@ -21,7 +22,13 @@ def list():
         reader = csv.reader(file)
         next(reader)
         for row in reader:
-            data.append(row[1:])
+            datarow = row[1:]
+            datarow.append(np.arange(15).tolist())
+            datarow.append(np.sin(np.arange(15)).tolist())
+            datarow.append(np.arange(15).tolist())
+            datarow.append(random.sample(range(1, 100), 15))
+            data.append(datarow)
+
     return render_template("list.html", data = data)
 
 @app.route('/js/list.js')

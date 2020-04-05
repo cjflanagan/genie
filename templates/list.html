@@ -1,38 +1,68 @@
-<div id="list" style="display:flex;flex-direction:column">
-  <input id="search" placeholder="search by any term">
-  <table id="table">
-    <thead>
-      <tr>
-        <th>
-          Gene
-          <i class="fa fa-fw fa-sort" state=0></i>
-        </th>
-        <th>
-          Disease Name
-          <i class="fa fa-fw fa-sort" state=0></i>
-        </th>
-        <th>
-          Mesh ID
-          <i class="fa fa-fw fa-sort" state=0></i>
-        </th>
-        <th>
-          Score
-          <i class="fa fa-fw fa-sort" state=0></i>
-        </th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<div style="display:flex;flex-direction:row">
+  <div id="list" style="display:flex;flex-direction:column;width:30vw">
+    <input id="search" placeholder="search by any term">
+    <table id="table">
+      <thead>
+        <tr>
+          <th>
+            ID
+            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
+          </th>
+          <th>
+            Gene
+            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
+          </th>
+          <th>
+            Disease Name
+            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
+          </th>
+          <th>
+            Mesh ID
+            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
+          </th>
+          <th>
+            Score
+            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div id="scatter" style="width:30vw;height:40vh"></div>
+  </div>
+  <div>
+    <div style="display:flex">
+      <div id="histo1" style="width:35vw"></div>
+      <div id="histo2" style="width:35vw"></div>
+    </div>
+
+    <div style="display:flex">
+      <div>
+        <h3>Articles</h3>
+      </div>
+      <div>
+        <h3>Articles</h3>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="quad" style="display:flex">
 </div>
 
 <script>
-  var genieData = JSON.parse('{{data | tojson}}');
+  var genieData = JSON.parse('{{data | tojson}}')
+  var numColumns = 4
 </script>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8" src="js/list.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+<style>
+  #table tbody tr:hover {
+    cursor: pointer;
+    background: grey;
+  }
+</style>

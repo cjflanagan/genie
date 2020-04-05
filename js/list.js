@@ -5,7 +5,7 @@ $("#search").keyup((event) => {
 $("#table .fa-sort").click((event) => {
   let state = (parseInt(event.target.getAttribute("state")) + 1) % 3
   event.target.setAttribute("state", state)
-  for (let j = 0; j < 4; j++) {
+  for (let j = 0; j < numColumns; j++) {
     if ($("#table thead tr .fa-sort")[j] != event.target) {
       $("#table thead tr .fa-sort")[j].setAttribute("state", 0)
     }
@@ -17,7 +17,7 @@ function updateData() {
   let value = $("#search").val().toLowerCase()
   currentData = []
   for (let i = 0; i < genieData.length; i++) {
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < numColumns; j++) {
       if (genieData[i][j].toLowerCase().includes(value)) {
         currentData.push(genieData[i])
         break
@@ -25,7 +25,7 @@ function updateData() {
     }
   }
 
-  for (let j = 0; j < 4; j++) {
+  for (let j = 0; j < numColumns; j++) {
     let state = $("#table thead tr .fa-sort")[j].getAttribute("state")
     let factor = 0
     if (state == "1") {
@@ -57,12 +57,16 @@ function updateTable(data) {
   let table = $("#table")
   let tbody = table.find("tbody")
   tbody.empty()
+  updateQuad(data[0])
   for (let i = 0; i < data.length; i++) {
     let tr = $("<tr>")
     let row = data[i]
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < numColumns; j++) {
       tr.append("<td>" + row[j] + "</td>")
     }
+    tr.click((event) => {
+      updateQuad(data[i])
+    })
     tbody.append(tr)
   }
 
@@ -111,7 +115,36 @@ function updateTable(data) {
   // tfoot.append(tr);
 }
 
-updateTable(genieData)
+function updateQuad(data) {
+  $("#histo1").empty()
+  Plotly.newPlot("histo1", [{x: data[7], type: "histogram"}], {
+    title: {
+      text: "Gene Distribution"
+    }
+  })
+
+  $("#histo2").empty()
+  Plotly.newPlot("histo2", [{x: data[9], type: "histogram"}], {
+    title: {
+      text: "Disease Distribution"
+    }
+  })
+
+  let layout = {
+    margin: {
+      l: 0,
+      r: 0,
+      b: 0,
+      t: 0,
+      pad: 0
+    }
+  }
+
+  $("#scatter").empty()
+  Plotly.newPlot("scatter", [{x: data[6], y: data[7], type: "scatter"}, {x: data[8], y: data[9], type: "scatter"}], layout)
+}
+
+updateData(genieData)
 //
 // function drawHistogram(data, i) {
 //   $("#histogram").empty();

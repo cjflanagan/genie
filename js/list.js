@@ -142,6 +142,30 @@ function updateQuad(data) {
 
   $("#scatter").empty()
   Plotly.newPlot("scatter", [{x: data[6], y: data[7], type: "scatter"}, {x: data[8], y: data[9], type: "scatter"}], layout)
+
+  $("#articles1").empty()
+  $.get({
+    url: "/search?q=" + data[0],
+    success: (data) => {
+      for (let i = 0; i < data.length; i++) {
+        let atag = $("<a>" + data[i][0] + "</a>")
+        atag.attr("href", data[i][1])
+        $("#articles1").append(atag)
+      }
+    }
+  })
+
+  $("#articles2").empty()
+  $.get({
+    url: "/search?q=" + data[1],
+    success: (data) => {
+      for (let i = 0; i < data.length; i++) {
+        let atag = $("<a>" + data[i][0] + "</a>")
+        atag.attr("href", data[i][1])
+        $("#articles2").append(atag)
+      }
+    }
+  })
 }
 
 updateData(genieData)

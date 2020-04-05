@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, request
 from flask import render_template
 from flask import jsonify
 import datetime
@@ -8,6 +8,9 @@ from operator import itemgetter
 import numpy as np
 import csv
 import random
+import requests
+from os import path
+from bs4 import BeautifulSoup
 
 app = Flask("genie")
 
@@ -38,6 +41,28 @@ def listjs():
 @app.route('/js/data.js')
 def data_js():
     return send_from_directory("js", "data.js")
+
+@app.route("/search")
+def search():
+    q = request.args.get("q")
+    results = []
+    if path.exists("search_results/" + q):
+        with open("search_results/" + q, "r") as results_file:
+            reader = csv.reader(results_file)
+            for row in reader:
+                results.append(row)
+    else:
+        response = requests.get("https://www.googleapis.com/customsearch/v1?key=AIzaSyAfIVyy0YivPzdEmrec8KlKRJz1bTSQgw0&cx=004315576993373726096:gkqhc3opbnm&q=" + q)
+        print("MAKING REQUEST")
+        data = response.json()
+        for item in data["items"]:
+            results.append([item["title"], item["link"]])
+        with open("search_results/" + q, "w") as results_file:
+            writer = csv.writer(results_file)
+            for result in results:
+                writer.writerow(result)
+
+    return jsonify(results)
 
 @app.route("/entities")
 def entities():

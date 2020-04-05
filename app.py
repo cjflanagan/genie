@@ -52,7 +52,7 @@ def search():
             for row in reader:
                 results.append(row)
     else:
-        response = requests.get("https://www.googleapis.com/customsearch/v1?key=AIzaSyAfIVyy0YivPzdEmrec8KlKRJz1bTSQgw0&cx=004315576993373726096:gkqhc3opbnm&q=" + q)
+        response = requests.get("https://www.googleapis.com/customsearch/v1?key=" + os.getenv("GOOGLE_API") + "&cx=004315576993373726096:gkqhc3opbnm&q=" + q)
         print("MAKING REQUEST")
         data = response.json()
         for item in data["items"]:

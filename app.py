@@ -128,4 +128,4 @@ def entities():
                     entity_lists.append(entity_list)
             return jsonify(entity_lists)
 
-app.run(host = "0.0.0.0", port = 5000, debug = True)
+app.run(host = "0.0.0.0", port = 5000)

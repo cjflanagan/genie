@@ -11,6 +11,7 @@ import random
 import requests
 from os import path
 from bs4 import BeautifulSoup
+import os
 
 app = Flask("genie")
 

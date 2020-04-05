@@ -78,6 +78,7 @@ function updateTable(data) {
     csv += "\n"
   })
   let a = document.getElementById("export")
+  a.getElementsByTagName("span")[0].innerText = data.length
   a.href = "data:text/csv;charset=utf-8," + encodeURI(csv)
   a.download = "data.csv"
 }

@@ -27,10 +27,10 @@ def list():
         next(reader)
         for row in reader:
             datarow = row[1:]
-            datarow.append(np.arange(15).tolist())
-            datarow.append(np.sin(np.arange(15)).tolist())
-            datarow.append(np.arange(15).tolist())
-            datarow.append(random.sample(range(1, 100), 15))
+            datarow.append(np.arange(150).tolist())
+            datarow.append(np.sin(np.arange(150) + np.random.normal(100, 100, 150)).tolist())
+            datarow.append(np.arange(150).tolist())
+            datarow.append(random.sample(range(1, 1000), 150))
             data.append(datarow)
 
     return render_template("list.html", data = data)

@@ -57,7 +57,7 @@ function updateTable(data) {
   let table = $("#table")
   let tbody = table.find("tbody")
   tbody.empty()
-  updateQuad(data[0])
+
   for (let i = 0; i < data.length; i++) {
     let tr = $("<tr>")
     let row = data[i]
@@ -65,10 +65,12 @@ function updateTable(data) {
       tr.append("<td>" + row[j] + "</td>")
     }
     tr.click((event) => {
-      updateQuad(data[i])
+      updateQuad(data[i], i)
     })
     tbody.append(tr)
   }
+
+  updateQuad(data[0], 0)
 
   let csv = ""
   data.forEach(function (row) {
@@ -80,7 +82,9 @@ function updateTable(data) {
   a.download = "data.csv"
 }
 
-function updateQuad(data) {
+function updateQuad(data, index) {
+  $("#table tbody tr").removeClass("selected")
+  $("#table tbody tr")[index].classList.add("selected")
   $("#histo1").empty()
   Plotly.newPlot("histo1", [{x: data[7], type: "histogram"}], {
     title: {
@@ -106,8 +110,9 @@ function updateQuad(data) {
   }
 
   $("#scatter").empty()
-  Plotly.newPlot("scatter", [{x: data[6], y: data[7], type: "scatter"}, {x: data[8], y: data[9], type: "scatter"}], layout)
+  Plotly.newPlot("scatter", [{x: data[6], y: data[7], name: "Disease", type: "scatter"}, {x: data[8], y: data[9], name: "Gene", type: "scatter"}], layout)
 
+  $("#articles1h").text(data[0] + " Articles")
   $("#articles1").empty()
   $.get({
     url: "/search?q=" + data[0],
@@ -122,14 +127,17 @@ function updateQuad(data) {
     }
   })
 
+  $("#articles2h").text(data[1] + " Articles")
   $("#articles2").empty()
   $.get({
     url: "/search?q=" + data[1],
     success: (data) => {
       for (let i = 0; i < data.length; i++) {
+        let adiv = $("<div>")
         let atag = $("<a>" + data[i][0] + "</a>")
         atag.attr("href", data[i][1])
-        $("#articles2").append(atag)
+        adiv.append(atag)
+        $("#articles2").append(adiv)
       }
     }
   })

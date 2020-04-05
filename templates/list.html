@@ -1,19 +1,15 @@
 <div style="display:flex;flex-direction:row;height:100%;width:100%">
   <div id="list" style="display:flex;flex-direction:column;width:40%;height:100%">
-    <input id="search" placeholder="search by any term">
-    <table id="table">
+    <input id="search" placeholder="search by any term" style="height:5%">
+    <table id="table" class="table" style="height:40%">
       <thead>
         <tr>
-          <th>
-            ID
-            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
-          </th>
           <th>
             Gene
             <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
           </th>
           <th>
-            Disease Name
+            Disease
             <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
           </th>
           <th>
@@ -28,30 +24,30 @@
       </thead>
       <tbody></tbody>
     </table>
-    <div style="display:flex;width:100%;height:20%;padding:20px 0">
+    <div style="display:flex;width:100%;height:15%;padding:20px 0;justify-content:space-around;align-items:center">
       <div id="statistics">
-        <div>Breakout Coefficient: 9001</div>
-        <div>Current Event Score: 123</div>
-        <div>Classifier Score: 0.5</div>
+        <div>Breakout Coefficient <span class="badge badge-dark">9001</span></div>
+        <div>Current Event Score <span class="badge badge-dark">123</span></div>
+        <div>Classifier Score <span class="badge badge-dark">0.5</span></div>
       </div>
-      <div><a id="export">Export</a></div>
+      <div><a id="export" class="btn btn-primary">Export</a></div>
     </div>
-    <div id="scatter" style="width:100%;height:30%"></div>
+    <div id="scatter" style="width:100%;height:40%"></div>
   </div>
   <div style="width:60%;height:100%">
-    <div style="display:flex">
-      <div id="histo1" style="width:50%;height:40%"></div>
-      <div id="histo2" style="width:50%;height:40%"></div>
+    <div style="display:flex;height:60%">
+      <div id="histo1" style="width:50%;"></div>
+      <div id="histo2" style="width:50%;"></div>
     </div>
 
-    <div id="articles" style="display:flex;width:100%;height:60%">
-      <div style="width:50%;height:100%">
-        <h3>Articles</h3>
-        <div id="articles1"></div>
+    <div id="articles" style="display:flex;width:100%;height:40%">
+      <div style="width:50%;height:100%;padding:20px">
+        <h3 id="articles1h" style="height:15%"></h3>
+        <div id="articles1" style="overflow:scroll;height:85%;overflow:auto"></div>
       </div>
-      <div style="width:50%;height:100%">
-        <h3>Articles</h3>
-        <div id="articles2"></div>
+      <div style="width:50%;height:100%;padding:20px">
+        <h3 id="articles2h" style="height:15%"></h3>
+        <div id="articles2" style="overflow:scroll;height:85%;overflow:auto"></div>
       </div>
     </div>
   </div>
@@ -66,15 +62,42 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8" src="js/list.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <style>
+  #table tbody {
+    height: 90%;
+    overflow: auto;
+    display: block;
+  }
+
+  #table thead {
+    height: 10%;
+  }
+
+  #table thead, tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+  }
+
+  #table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
   #table tbody tr:hover {
     cursor: pointer;
     background: #ebebeb;
   }
 
-  #articles a {
-    display: block;
+  #table tbody tr.selected {
+    background: #ebebeb;
+  }
+
+  #search {
+    padding: 10px;
   }
 
   body {

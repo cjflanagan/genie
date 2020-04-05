@@ -1,0 +1,38 @@
+<div id="list" style="display:flex;flex-direction:column">
+  <input id="search" placeholder="search by any term">
+  <table id="table">
+    <thead>
+      <tr>
+        <th>
+          Gene
+          <i class="fa fa-fw fa-sort" state=0></i>
+        </th>
+        <th>
+          Disease Name
+          <i class="fa fa-fw fa-sort" state=0></i>
+        </th>
+        <th>
+          Mesh ID
+          <i class="fa fa-fw fa-sort" state=0></i>
+        </th>
+        <th>
+          Score
+          <i class="fa fa-fw fa-sort" state=0></i>
+        </th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div id="quad" style="display:flex">
+</div>
+
+<script>
+  var genieData = JSON.parse('{{data | tojson}}');
+</script>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="js/list.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">

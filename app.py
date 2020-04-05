@@ -6,12 +6,27 @@ import pdb
 import statistics
 from operator import itemgetter
 import numpy as np
+import csv
 
 app = Flask("genie")
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/list")
+def list():
+    data = []
+    with open("ExampleValues.csv", "r") as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            data.append(row[1:])
+    return render_template("list.html", data = data)
+
+@app.route('/js/list.js')
+def listjs():
+    return send_from_directory("js", "list.js")
 
 @app.route('/js/data.js')
 def data_js():

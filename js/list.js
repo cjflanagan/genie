@@ -18,7 +18,7 @@ function updateData() {
   currentData = []
   for (let i = 0; i < genieData.length; i++) {
     for (let j = 0; j < numColumns; j++) {
-      if (genieData[i][j].toLowerCase().includes(value)) {
+      if (genieData[i][j].toString().toLowerCase().includes(value)) {
         currentData.push(genieData[i])
         break
       }
@@ -90,25 +90,19 @@ function updateQuad(data, index) {
   Plotly.newPlot("histo1", [{x: data[numColumns + 2], type: "histogram"}], {
     title: {
       text: "Gene Distribution"
-    }
+    },
+    plot_bgcolor: "#222222",
+    paper_bgcolor:"#222222",
   })
 
   $("#histo2").empty()
   Plotly.newPlot("histo2", [{x: data[numColumns + 4], type: "histogram"}], {
     title: {
       text: "Disease Distribution"
-    }
+    },
+    plot_bgcolor: "#222222",
+    paper_bgcolor:"#222222",
   })
-
-  let layout = {
-    margin: {
-      l: 0,
-      r: 0,
-      b: 0,
-      t: 0,
-      pad: 0
-    }
-  }
 
   $("#articles1h").text(data[0] + " Articles")
   $("#articles1").empty()

@@ -87,14 +87,14 @@ function updateQuad(data, index) {
   $("#table tbody tr").removeClass("selected")
   $("#table tbody tr")[index].classList.add("selected")
   $("#histo1").empty()
-  Plotly.newPlot("histo1", [{x: data[7], type: "histogram"}], {
+  Plotly.newPlot("histo1", [{x: data[numColumns + 2], type: "histogram"}], {
     title: {
       text: "Gene Distribution"
     }
   })
 
   $("#histo2").empty()
-  Plotly.newPlot("histo2", [{x: data[9], type: "histogram"}], {
+  Plotly.newPlot("histo2", [{x: data[numColumns + 4], type: "histogram"}], {
     title: {
       text: "Disease Distribution"
     }
@@ -109,9 +109,6 @@ function updateQuad(data, index) {
       pad: 0
     }
   }
-
-  $("#scatter").empty()
-  Plotly.newPlot("scatter", [{x: data[6], y: data[7], name: "Disease", type: "scatter"}, {x: data[8], y: data[9], name: "Gene", type: "scatter"}], layout)
 
   $("#articles1h").text(data[0] + " Articles")
   $("#articles1").empty()

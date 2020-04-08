@@ -12,7 +12,10 @@ import requests
 from os import path
 from bs4 import BeautifulSoup
 import os
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getcwd() + "/service-account.json"
+from google.cloud import bigquery
 
+client = bigquery.Client()
 app = Flask("genie")
 
 @app.route("/index")
@@ -21,23 +24,43 @@ def index():
 
 @app.route("/")
 def list():
-    data = []
-    with open("ExampleValues.csv", "r") as file:
-        reader = csv.reader(file)
-        next(reader)
-        for row in reader:
-            datarow = row[1:]
-            datarow.append(np.arange(150).tolist())
-            datarow.append(np.sin(np.arange(150) + np.random.normal(100, 100, 150)).tolist())
-            datarow.append(np.arange(150).tolist())
-            datarow.append(random.sample(range(1, 1000), 150))
-            data.append(datarow)
+    query_job = client.query("""
+        SELECT * FROM `harvard-599-trendsetters.classifier_output.classifier_output_psuedo_table` LIMIT 1000
+    """)
+    results = query_job.result()
 
-    return render_template("list.html", data = data)
+    data = []
+    columns = ["Gene", "Disease", "MeshID", "Score"]
+    for row in results:
+        datarow = [row[0], row[1], row[2], row[4]]
+        datarow.append(row[3].split("|"))
+        datarow.append(np.arange(150).tolist())
+        datarow.append(np.sin(np.arange(150) + np.random.normal(100, 100, 150)).tolist())
+        datarow.append(np.arange(150).tolist())
+        datarow.append(random.sample(range(1, 1000), 150))
+        data.append(datarow)
+
+    # with open("ExampleValues.csv", "r") as file:
+    #     reader = csv.reader(file)
+    #     next(reader)
+    #     for row in reader:
+    #         datarow = row[1:]
+    #         datarow.append(np.arange(150).tolist())
+    #         datarow.append(np.sin(np.arange(150) + np.random.normal(100, 100, 150)).tolist())
+    #         datarow.append(np.arange(150).tolist())
+    #         datarow.append(random.sample(range(1, 1000), 150))
+    #         pdb.set_trace()
+    #         data.append(datarow)
+
+    return render_template("list.html", data = data, columns = columns)
 
 @app.route('/js/list.js')
 def listjs():
     return send_from_directory("js", "list.js")
+
+@app.route('/css/bootstrap.min.css')
+def bootstrap_css():
+    return send_from_directory("css", "bootstrap.min.css")
 
 @app.route('/js/data.js')
 def data_js():

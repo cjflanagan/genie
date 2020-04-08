@@ -1,25 +1,15 @@
 <div style="display:flex;flex-direction:row;height:100%;width:100%">
   <div id="list" style="display:flex;flex-direction:column;width:40%;height:100%">
     <input id="search" placeholder="search by any term" style="height:5%">
-    <table id="table" class="table" style="height:40%">
+    <table id="table" class="table" style="height:75%">
       <thead>
         <tr>
-          <th>
-            Gene
-            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
-          </th>
-          <th>
-            Disease
-            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
-          </th>
-          <th>
-            Mesh ID
-            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
-          </th>
-          <th>
-            Score
-            <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
-          </th>
+          {%for i in range(columns | length)%}
+            <th>
+              {{columns[i]}}
+              <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
+            </th>
+          {%endfor%}
         </tr>
       </thead>
       <tbody></tbody>
@@ -32,7 +22,6 @@
       </div>
       <div><a id="export" class="btn btn-primary">Export <span class="badge badge-light"></span></a></div>
     </div>
-    <div id="scatter" style="width:100%;height:40%"></div>
   </div>
   <div style="width:60%;height:100%">
     <div style="display:flex;height:60%">
@@ -55,7 +44,7 @@
 
 <script>
   var genieData = JSON.parse('{{data | tojson}}')
-  var numColumns = 4
+  var numColumns = {{columns | length}}
 </script>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -94,6 +83,10 @@
 
   #table tbody tr.selected {
     background: #ebebeb;
+  }
+
+  #table td {
+    overflow: auto;
   }
 
   #search {

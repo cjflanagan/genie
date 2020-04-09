@@ -47,7 +47,7 @@ def list():
         datarow = [row[0], row[1], row[2], row[4]]
         datarow.append(row[3].split("|"))
         datarow.append(np.arange(150).tolist())
-        datarow.append(np.sin(np.arange(150) + np.random.normal(100, 100, 150)).tolist())
+        datarow.append((np.sin(np.arange(150) + np.random.normal(100, 100, 150)) ** 2).tolist())
         datarow.append(np.arange(150).tolist())
         datarow.append(random.sample(range(1, 1000), 150))
         pair = (row[2], row[1], row[0])

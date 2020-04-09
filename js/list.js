@@ -90,18 +90,16 @@ function updateQuad(data, index) {
   $("#table tbody tr").removeClass("selected")
   $("#table tbody tr")[index].classList.add("selected")
   $("#histo1").empty()
-  Plotly.newPlot("histo1", [{x: data[numColumns + 2], type: "histogram"}], {
+  Plotly.newPlot("histo1", [{x: data[numColumns + 1], y: data[numColumns + 2], type: "bar"}], {
     title: {
       text: "Gene Distribution"
     },
     plot_bgcolor: "#222222",
     paper_bgcolor:"#222222",
-    xaxis: {
+    yaxis: {
       title: {
         text: 'Number of Occurances'
       },
-      linecolor: 'black',
-      linewidth: 2,
     },
     font: {
       family: 'Arial, sans-serif',
@@ -110,18 +108,16 @@ function updateQuad(data, index) {
   })
 
   $("#histo2").empty()
-  Plotly.newPlot("histo2", [{x: data[numColumns + 4], type: "histogram"}], {
+  Plotly.newPlot("histo2", [{x: data[numColumns + 3], y: data[numColumns + 4], type: "bar"}], {
     title: {
       text: "Disease Distribution"
     },
     plot_bgcolor: "#222222",
     paper_bgcolor:"#222222",
-    xaxis: {
+    yaxis: {
       title: {
         text: 'Number of Occurences'
-      },
-      linecolor: 'black',
-      linewidth: 2,
+      }
     },
     font: {
       family: 'Arial, sans-serif',

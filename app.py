@@ -51,7 +51,7 @@ def list():
         scores.append(row[4])
         datarow.append(row[3].split("|"))
         datarow.append((np.arange(30) + 1990).tolist())
-        datarow.append((np.sin(np.arange(30) + np.random.normal(100, 100, 30)) ** 2).tolist())
+        datarow.append(random.sample(range(1, 1000), 30))
         datarow.append((np.arange(30) + 1990).tolist())
         datarow.append(random.sample(range(1, 1000), 30))
         pair = (row[2], row[1], row[0])

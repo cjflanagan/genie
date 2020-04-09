@@ -15,6 +15,8 @@ import os
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getcwd() + "/service-account.json"
 from google.cloud import bigquery
 
+os.environ["FLASK_ENV"] = "development"
+
 client = bigquery.Client()
 app = Flask("genie")
 
@@ -41,10 +43,12 @@ def list():
     """)
     results = query_job.result()
 
+    scores = []
     data = []
     columns = ["Gene", "Disease", "MeshID", "Score"]
     for row in results:
         datarow = [row[0], row[1], row[2].replace("MESH:", ""), round(float(row[4]), 2)]
+        scores.append(row[4])
         datarow.append(row[3].split("|"))
         datarow.append(np.arange(150).tolist())
         datarow.append((np.sin(np.arange(150) + np.random.normal(100, 100, 150)) ** 2).tolist())
@@ -61,19 +65,12 @@ def list():
             datarow.append([])
         data.append(datarow)
 
-    # with open("ExampleValues.csv", "r") as file:
-    #     reader = csv.reader(file)
-    #     next(reader)
-    #     for row in reader:
-    #         datarow = row[1:]
-    #         datarow.append(np.arange(150).tolist())
-    #         datarow.append(np.sin(np.arange(150) + np.random.normal(100, 100, 150)).tolist())
-    #         datarow.append(np.arange(150).tolist())
-    #         datarow.append(random.sample(range(1, 1000), 150))
-    #         pdb.set_trace()
-    #         data.append(datarow)
+    indices = np.array(scores).argsort()[::-1]
+    results = []
+    for index in indices:
+        results.append(data[index])
 
-    return render_template("list.html", data = data, columns = columns)
+    return render_template("list.html", data = results, columns = columns)
 
 @app.route('/js/list.js')
 def listjs():

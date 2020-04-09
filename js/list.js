@@ -96,9 +96,14 @@ function updateQuad(data, index) {
     },
     plot_bgcolor: "#222222",
     paper_bgcolor:"#222222",
+    xaxis: {
+      title: {
+        text: 'Year'
+      },
+    },
     yaxis: {
       title: {
-        text: 'Number of Occurances'
+        text: 'Number of Publications'
       },
     },
     font: {
@@ -114,9 +119,14 @@ function updateQuad(data, index) {
     },
     plot_bgcolor: "#222222",
     paper_bgcolor:"#222222",
+    xaxis: {
+      title: {
+        text: 'Year'
+      }
+    },
     yaxis: {
       title: {
-        text: 'Number of Occurences'
+        text: 'Number of Publications'
       }
     },
     font: {

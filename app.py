@@ -44,7 +44,7 @@ def list():
     data = []
     columns = ["Gene", "Disease", "MeshID", "Score"]
     for row in results:
-        datarow = [row[0], row[1], row[2], row[4]]
+        datarow = [row[0], row[1], row[2].replace("MESH:", ""), round(float(row[4]), 2)]
         datarow.append(row[3].split("|"))
         datarow.append(np.arange(150).tolist())
         datarow.append((np.sin(np.arange(150) + np.random.normal(100, 100, 150)) ** 2).tolist())

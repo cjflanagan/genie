@@ -24,6 +24,18 @@ def index():
 
 @app.route("/")
 def list():
+    pair_data = {}
+    query_job = client.query("""
+        SELECT * FROM `harvard-599-trendsetters.classifier_output.psuedo_timeseries`
+    """)
+    results = query_job.result()
+    for row in results:
+        pair = (row[3], row[4], row[5])
+        pair_data.setdefault(pair, ([], []))
+        day = (row[1] - datetime.date(1970,1,1)).days
+        pair_data[pair][0].append(day)
+        pair_data[pair][1].append(row[2])
+
     query_job = client.query("""
         SELECT * FROM `harvard-599-trendsetters.classifier_output.classifier_output_psuedo_table` LIMIT 1000
     """)
@@ -38,6 +50,13 @@ def list():
         datarow.append(np.sin(np.arange(150) + np.random.normal(100, 100, 150)).tolist())
         datarow.append(np.arange(150).tolist())
         datarow.append(random.sample(range(1, 1000), 150))
+        pair = (row[2], row[1], row[0])
+        if pair in pair_data:
+            datarow.append(pair_data[pair][0])
+            datarow.append(pair_data[pair][1])
+        else:
+            datarow.append([])
+            datarow.append([])
         data.append(datarow)
 
     # with open("ExampleValues.csv", "r") as file:

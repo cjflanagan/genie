@@ -104,6 +104,14 @@ function updateQuad(data, index) {
     paper_bgcolor:"#222222",
   })
 
+  let layout = {
+    title: {
+      text: "Gene Disease Relationship Time Series",
+    }
+  }
+  $("#scatter").empty()
+  Plotly.newPlot("scatter", [{x: data[numColumns + 5], y: data[numColumns + 6], name: "Disease", type: "scatter"}], layout)
+
   $("#articles1h").text(data[0] + " Articles")
   $("#articles1").empty()
   $.get({

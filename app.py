@@ -50,10 +50,10 @@ def list():
         datarow = [row[0], row[1], row[2].replace("MESH:", ""), round(float(row[4]), 2)]
         scores.append(row[4])
         datarow.append(row[3].split("|"))
-        datarow.append((np.arange(150) + 1875).tolist())
-        datarow.append((np.sin(np.arange(150) + np.random.normal(100, 100, 150)) ** 2).tolist())
-        datarow.append((np.arange(150) + 1875).tolist())
-        datarow.append(random.sample(range(1, 1000), 150))
+        datarow.append((np.arange(30) + 1990).tolist())
+        datarow.append((np.sin(np.arange(30) + np.random.normal(100, 100, 30)) ** 2).tolist())
+        datarow.append((np.arange(30) + 1990).tolist())
+        datarow.append(random.sample(range(1, 1000), 30))
         pair = (row[2], row[1], row[0])
         if pair in pair_data:
             x = np.array(pair_data[pair][0])

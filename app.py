@@ -52,8 +52,10 @@ def list():
         datarow.append(random.sample(range(1, 1000), 150))
         pair = (row[2], row[1], row[0])
         if pair in pair_data:
-            datarow.append(pair_data[pair][0])
-            datarow.append(pair_data[pair][1])
+            x = np.array(pair_data[pair][0])
+            y = np.array(pair_data[pair][1])
+            datarow.append((x - x.min()).tolist())
+            datarow.append((y - y.min()).tolist())
         else:
             datarow.append([])
             datarow.append([])

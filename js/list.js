@@ -62,7 +62,10 @@ function updateTable(data) {
     let tr = $("<tr>")
     let row = data[i]
     for (let j = 0; j < numColumns; j++) {
-      tr.append("<td>" + row[j] + "</td>")
+      let td = $("<td>")
+      let div = $("<div>" + row[j] + "</div>")
+      td.append(div)
+      tr.append(td)
     }
     tr.click((event) => {
       updateQuad(data[i], i)
@@ -93,6 +96,17 @@ function updateQuad(data, index) {
     },
     plot_bgcolor: "#222222",
     paper_bgcolor:"#222222",
+    xaxis: {
+      title: {
+        text: 'Number of Occurances'
+      },
+      linecolor: 'black',
+      linewidth: 2,
+    },
+    font: {
+      family: 'Arial, sans-serif',
+      color: 'white',
+    },
   })
 
   $("#histo2").empty()
@@ -102,11 +116,38 @@ function updateQuad(data, index) {
     },
     plot_bgcolor: "#222222",
     paper_bgcolor:"#222222",
+    xaxis: {
+      title: {
+        text: 'Number of Occurences'
+      },
+      linecolor: 'black',
+      linewidth: 2,
+    },
+    font: {
+      family: 'Arial, sans-serif',
+      color: 'white',
+    },
   })
 
   let layout = {
     title: {
       text: "Gene Disease Relationship Time Series",
+    },
+    plot_bgcolor: "#333333",
+    paper_bgcolor:"#333333",
+    font: {
+      family: 'Arial, sans-serif',
+      color: 'white',
+    },
+    xaxis: {
+      title: {
+        text: 'Day'
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Occurances'
+      }
     }
   }
   $("#scatter").empty()

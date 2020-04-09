@@ -34,7 +34,15 @@
   }
 
   #table td {
+    padding: 10px;
+  }
+
+  #table td > div {
     overflow: auto;
+  }
+
+  #table {
+    margin-bottom: 0;
   }
 
   #search {
@@ -49,13 +57,21 @@
     border-style: none;
   }
 
-  #articles * {
-    color: white;
+  #statistics > * {
+    margin-right: 20px;
   }
 
   ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
+  }
+
+  #vs * {
+    color: white;
+  }
+
+  #articles1 > *, #articles2 > * {
+    margin-bottom: 10px;
   }
 
   body {
@@ -64,10 +80,10 @@
   }
 </style>
 
-<div style="display:flex;flex-direction:row;height:100%;width:100%">
-  <div id="list" style="display:flex;flex-direction:column;width:50%;height:100%">
-    <input id="search" placeholder="search by any term" style="height:5%;border-style:none">
-    <table id="table" class="table" style="height:calc(40% - 1rem)">
+<div style="display:flex;width:100%;height:60%">
+  <div style="width:40%;height:100%">
+    <input id="search" placeholder="search by any term" style="width:100%;height:10%;border-style:none">
+    <table id="table" class="table" style="width:100%;height:calc(90%)">
       <thead style="background-color:grey;color:white;">
         <tr>
           {%for i in range(columns | length)%}
@@ -80,31 +96,33 @@
       </thead>
       <tbody></tbody>
     </table>
-    <div style="display:flex;width:100%;height:15%;padding:20px 0;justify-content:space-around;align-items:center;background-color:#DDDDDD">
-      <div id="statistics">
-        <div>Breakout Coefficient <span class="badge badge-dark">9001</span></div>
-        <div>Current Event Score <span class="badge badge-dark">123</span></div>
-        <div>Classifier Score <span class="badge badge-dark">0.5</span></div>
-      </div>
-      <div><a id="export" class="btn btn-primary">Export <span class="badge badge-light"></span></a></div>
-    </div>
-    <div id="scatter" style="width:100%;height:40%"></div>
   </div>
-  <div style="width:50%;height:100%;background-color:#222222">
-    <div style="display:flex;height:60%">
-      <div id="histo1" style="width:50%;"></div>
-      <div id="histo2" style="width:50%;"></div>
+  <div style="width:60%;height:100%">
+    <div id="scatter" style="width:100%;height:85%"></div>
+    <div style="width:100%;height:15%;display:flex;align-items:center;background-color:#666666;padding:20px;color:white;">
+      <div id="statistics" style="width:80%;display:flex">
+        <div>Breakout Coefficient <span class="badge badge-info">9001</span></div>
+        <div>Current Event Score <span class="badge badge-info">123</span></div>
+        <div>Classifier Score <span class="badge badge-info">0.5</span></div>
+      </div>
+      <div style="width:20%"><a id="export" class="btn btn-light">Export <span class="badge badge-dark"></span></a></div>
     </div>
+  </div>
+</div>
+<div id="vs" style="display:flex;width:100%;height:40%;background-color:#222222">
+  <div style="display:flex;width:50%;height:100%">
+    <div id="histo1" style="width:50%;height:100%"></div>
+    <div style="width:50%;height:100%;padding:20px">
+      <h4 id="articles1h" style="height:20%"></h4>
+      <div id="articles1" style="overflow:scroll;height:80%;overflow:auto"></div>
+    </div>
+  </div>
 
-    <div id="articles" style="display:flex;width:100%;height:40%;background-color:#555555">
-      <div style="width:50%;height:100%;padding:20px">
-        <h4 id="articles1h" style="height:20%"></h4>
-        <div id="articles1" style="overflow:scroll;height:80%;overflow:auto"></div>
-      </div>
-      <div style="width:50%;height:100%;padding:20px">
-        <h4 id="articles2h" style="height:20%"></h4>
-        <div id="articles2" style="overflow:scroll;height:80%;overflow:auto"></div>
-      </div>
+  <div style="display:flex;width:50%;height:100%">
+    <div id="histo2" style="width:50%;height:100%"></div>
+    <div style="width:50%;height:100%;padding:20px">
+      <h4 id="articles2h" style="height:20%"></h4>
+      <div id="articles2" style="overflow:scroll;height:80%;overflow:auto"></div>
     </div>
   </div>
 </div>

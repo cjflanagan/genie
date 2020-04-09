@@ -15,7 +15,7 @@ import os
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getcwd() + "/service-account.json"
 from google.cloud import bigquery
 
-os.environ["FLASK_ENV"] = "development"
+# os.environ["FLASK_ENV"] = "development"
 
 client = bigquery.Client()
 app = Flask("genie")
